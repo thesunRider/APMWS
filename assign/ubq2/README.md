@@ -1,4 +1,6 @@
-# ESPRuino based Smartwatch
+# Assignment 2
+
+## ESPRuino based Smartwatch
 
 The smart watch features 
 1. Getsure control
