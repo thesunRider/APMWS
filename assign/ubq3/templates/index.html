@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Plant Monitoring System</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+    </style>
+  </head>
+  <body>
+      <h1>Automatic Plant Monitoring and Watering System</h1>
+    <div class="main_range">
+    <div class="pg_block">
+    <div class="param_data">Moisture Level :
+      <div class="slidecontainer">
+        <input type="range" min="10" max="70" value="50" class="slider" id="idmoist">
+      </div>
+        <span id="valmoist" class="value_display">50</span>
+         %
+    </div>
+
+    <div class="param_data">Plant Height :
+      <div class="slidecontainer">
+        <input type="range" min="1" max="100" value="50" class="slider" id="idheight">
+      </div>
+        <span id="valheight" class="value_display">50</span>
+        cm
+    </div>
+
+    <div class="param_data">Temperature Level : 
+      <div class="slidecontainer">
+        <input type="range" min="5" max="50" value="50" class="slider" id="idtemp">
+      </div>
+        <span id="valtemp" class="value_display">50</span>
+        C
+    </div>
+
+    <div class="param_data">Sunlight Status :
+      <label class="switch">
+        <input type="checkbox" id="idsun">
+        <span class="sldman"></span>
+      </label>
+      <span id="valsun" class="value_display">OFF</span>
+    </div>
+    <div class="butn_class">
+      <button class="button button1" id="sent_data">Sent Sensor Data</button>
+    </div>
+  <div>
+    <img src="/static/plant.png">
+
+  </div>
+  </div>
+  <div class="sim_block">
+    <div class="param_data">Motor Status :
+      <label class="switch">
+        <input type="checkbox" id="idmot">
+        <span class="sldman"></span>
+      </label>
+      <span id="valmot" class="value_display">OFF</span>
+    </div>
+      Notifications:
+    <div class="inp_data">
+      <textarea id="text_hs" rows="10" cols="50" style="overflow:auto;" class="field left txtin" disabled> </textarea>
+    </div>
+  </div></div>
+
+    <script type="text/javascript">
+      // Get sliders and value displays
+      const moistSlider = document.getElementById("idmoist");
+      const heightSlider = document.getElementById("idheight");
+      const tempSlider = document.getElementById("idtemp");
+      const sunToggle = document.getElementById("idsun");
+      const motToggle = document.getElementById("idmot");
+
+      const moistVal = document.getElementById("valmoist");
+      const heightVal = document.getElementById("valheight");
+      const tempVal = document.getElementById("valtemp");
+      const sunVal = document.getElementById("valsun");
+      const motVal = document.getElementById("valmot");
+
+      // Initial values
+      moistVal.textContent = moistSlider.value;
+      heightVal.textContent = heightSlider.value;
+      tempVal.textContent = tempSlider.value;
+      sunVal.textContent = sunToggle.checked ? "ON" : "OFF";
+      motVal.textContent = motToggle.checked ? "ON" : "OFF";
+
+
+      // Event listeners
+      moistSlider.oninput = () => moistVal.textContent = moistSlider.value;
+      heightSlider.oninput = () => heightVal.textContent = heightSlider.value;
+      tempSlider.oninput = () => tempVal.textContent = tempSlider.value;
+      sunToggle.onchange = () => sunVal.textContent = sunToggle.checked ? "ON" : "OFF";
+      motToggle.onchange = () => motVal.textContent = motToggle.checked ? "ON" : "OFF";
+
+
+      $('#sent_data').click(function(response) {
+      $.get('/setvar', { "plant_height" : heightSlider.value ,"moisture_data" : moistSlider.value , "sunlight_data" :sunToggle.checked,"temperature_data" : tempSlider.value  }, function(response) {
+        console.log(response.message);
+      });
+    });
+
+        const textarea = document.getElementById("text_hs");
+
+      //sent sensor data automatically every 5 seconds
+      setInterval(function (response) { 
+      $.get('/setvar', { "plant_height" : heightSlider.value ,"moisture_data" : moistSlider.value , "sunlight_data" :sunToggle.checked,"temperature_data" : tempSlider.value  }, function(response) {
+        console.log(response);
+        document.getElementById("idmot").checked = response.mot;
+        var objn = response.notify
+         objn.forEach(n => {
+          if (n.notification_title || n.notification_msg) {
+            textarea.value += `Title: ${n.notification_title}\nMessage: ${n.notification_msg}\n\n`;
+          }
+        });
+
+
+      });
+      }, 5000);
+
+    </script>
+  </body>
+</html>
