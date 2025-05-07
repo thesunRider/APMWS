@@ -73,7 +73,7 @@ Instructions:
 
 
 def prompt_chaining(prompt): 
-  global motor_stat
+  global motor_stat,notfications_list
   message_history.append({"role":"user", "content":prompt})
   response: ChatResponse = chat(model='llama3.2', messages=message_history)
 

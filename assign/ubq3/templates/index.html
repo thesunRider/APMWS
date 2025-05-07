@@ -60,7 +60,7 @@
     </div>
       Notifications:
     <div class="inp_data">
-      <textarea id="text_hs" rows="10" cols="50" style="overflow:auto;" class="field left txtin" disabled> </textarea>
+      <textarea id="text_hs" rows="10" cols="50" style="overflow:auto;" class="txtin" disabled> </textarea>
     </div>
   </div></div>
 
@@ -117,6 +117,14 @@
 
       });
       }, 5000);
+
+      var div = $('#text_hs');
+      var scroller = setInterval(function(){
+          var pos = div.scrollTop();
+          div.scrollTop(++pos);
+          ++pos;
+          ++pos;
+      }, 10)
 
     </script>
   </body>
