@@ -1,5 +1,6 @@
 ## Assignment 3
 Automatic Plant management Prototype
+This is a Automatic Plant monitoring and watering system project as part of coursework in Uni sigen (LLM driven Plant Bot)
 
 Thinking Prompt:
 for every 15 minutes,Check time,check moisture level ,sunlight and temperature.
@@ -18,3 +19,5 @@ Outputs
 - Amount of water poured in
 - Sunlight Deficiency Warning
 - Temperature warning
+
+![image](https://github.com/user-attachments/assets/91118576-964c-4f7b-b3ef-345aa56e6836)
