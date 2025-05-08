@@ -1,4 +1,6 @@
 //author surya
+// Linked repository with demo 
+// https://github.com/thesunRider/APMWS/tree/master/assign/ubq2
 
 let showTime = true;
 let swipeIndicator = "";
